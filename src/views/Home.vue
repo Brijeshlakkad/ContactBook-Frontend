@@ -1,18 +1,22 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <NavBar></NavBar>
+    <div class="row">{{user.name}}</div>
   </div>
 </template>
-
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
+import NavBar from "@/components/NavBar.vue";
 export default {
-  name: 'home',
+  data() {
+    return {
+      user: null
+    };
+  },
   components: {
-    HelloWorld
+    NavBar
+  },
+  created() {
+    this.user = JSON.parse(localStorage.getItem("user"));
   }
-}
+};
 </script>
