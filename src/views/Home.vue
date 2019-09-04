@@ -1,11 +1,12 @@
 <template>
   <div>
     <NavBar></NavBar>
-    <router-view></router-view>
+    <Contact></Contact>
   </div>
 </template>
 <script>
 import NavBar from "@/components/NavBar.vue";
+import Contact from "@/components/Contact.vue";
 export default {
   data() {
     return {
@@ -13,7 +14,8 @@ export default {
     };
   },
   components: {
-    NavBar
+    NavBar,
+    Contact
   },
   created() {
     this.user = JSON.parse(localStorage.getItem("user"));

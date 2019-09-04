@@ -1,7 +1,6 @@
 <template>
-  <div>
-    
-    
+  <div class="row">
+    {{user.name}}
   </div>
 </template>
 <script>
@@ -12,7 +11,7 @@ export default {
     };
   },
   created() {
-    this.user = JSON.parse(localStorage.getItem("user"));
+    this.user = this.$parent.user;
   }
 };
 </script>
