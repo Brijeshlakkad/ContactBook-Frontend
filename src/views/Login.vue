@@ -53,9 +53,7 @@
         </div>
       </form>
       <div class="row">
-        <div class="col-sm-offset-1 col-xs-8 col-sm-offset-1">
-          <router-link to="/register" class="btn btn-link">create a new user?</router-link>
-        </div>
+        <router-link to="/register" class="btn btn-link">create a new user?</router-link>
       </div>
     </div>
   </div>
