@@ -52,6 +52,10 @@
             />
             <div v-if="$v.form.password.$dirty && $v.form.password.$invalid" style="color:red;">
               <div v-if="!$v.form.password.required" class="invalid-feedback">Password is required</div>
+              <div
+                v-if="$v.form.password.required && !$v.form.password.isPasswordValid"
+                class="invalid-feedback"
+              >Password is invalid</div>
             </div>
           </div>
         </div>
@@ -72,7 +76,11 @@
 import UserService from "../services/user.service";
 import { required, email } from "vuelidate/lib/validators";
 function isPasswordValid(val) {
-  return true;
+  let pattern = /(?=^.{6,10}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&amp;*()_+}{&quot;:;'?/&gt;.&lt;,])(?!.*\s).*$/;
+  if (pattern.test(val)) {
+    return true;
+  }
+  return false;
 }
 export default {
   data() {
@@ -100,13 +108,19 @@ export default {
   methods: {
     handleSubmit: async function(e) {
       e.preventDefault();
+      
+      this.$v.form.$touch();
+      if (this.$v.form.$error) return;
+
       this.submitted = true;
       let user = await this.userService.register(this.form);
-      if(user !=null){
-        this.$router.push({name: "login",
-        params: {
-          message: "Registered successfully"
-        },});
+      if (user != null) {
+        this.$router.push({
+          name: "login",
+          params: {
+            message: "Registered successfully"
+          }
+        });
       }
     }
   }
