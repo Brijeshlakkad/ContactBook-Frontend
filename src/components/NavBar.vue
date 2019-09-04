@@ -28,15 +28,11 @@
 
 <script>
 import UserService from "../services/user.service";
-import NavBar from "@/components/NavBar.vue";
 
 export default {
   userService: null,
   created() {
     this.userService = new UserService();
-  },
-  components: {
-    NavBar
   },
   methods: {
     getIsActive: function(path) {
