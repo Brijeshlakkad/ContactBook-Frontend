@@ -5,7 +5,7 @@
       v-if="contact==null && !addContactFlag"
     >Please Select a Contact</div>
     <div class="card" v-if="contact!=null || addContactFlag">
-      <div class="card-header text-white bg-primary">
+      <div class="card-header custom-focused-element">
         <h3>{{actionToTake}} Person Profile</h3>
       </div>
       <div class="card-body">
@@ -92,16 +92,16 @@
             </div>
           </div>
         </form>
-        <div class="row">
-          <div class="col-sm-3">
+        <div class="d-flex flex-row justify-content-between">
+          <div class="p-3">
             <button
               type="submit"
-              class="btn btn-success float-right"
+              class="btn btn-success"
               @click="addOrUpdate()"
               :disabled="$v.contact.$error || $v.contact.$invalid"
             >{{actionToTake}}</button>
           </div>
-          <div class="col-sm-offset-6 col-sm-3">
+          <div v-if="!addContactFlag" class="p-3">
             <button class="btn btn-danger" @click="deleteContact()">Delete</button>
           </div>
         </div>
@@ -176,7 +176,7 @@ export default {
     },
     async deleteContact() {
       let res = await this.contactService.deleteContact(this.contact.id);
-      if(res.status==200){
+      if (res.status == 200) {
         console.log("Deleted successfully..");
       }
       await this.$parent.getContactList();
@@ -192,5 +192,9 @@ export default {
   font-weight: bold;
   text-align: center;
   margin: 20px;
+}
+.custom-focused-element {
+  color: white;
+  background-color: #021e53c7;
 }
 </style>

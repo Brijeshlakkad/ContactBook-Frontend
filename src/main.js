@@ -2,17 +2,15 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import BootstrapVue from 'bootstrap-vue'
 import Vuelidate from 'vuelidate'
 
+// import 'bootstrap'
+
 import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
 
-import 'jquery/dist/jquery.min.js'
-
+import 'jquery/dist/jquery'
+import 'bootstrap/dist/js/bootstrap.js'
 Vue.use(Vuelidate)
-
-Vue.use(BootstrapVue)
 
 Vue.config.productionTip = false
 

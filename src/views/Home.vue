@@ -2,7 +2,7 @@
   <div>
     <NavBar></NavBar>
     <div class="container">
-      <nav class="navbar navbar-light bg-light fixed-top">
+      <nav class="navbar navbar-light">
         <button class="btn btn-primary" @click="createDefaultContact()">
           <span>Add Contact</span>
         </button>
@@ -128,5 +128,8 @@ li.list-group-item > a {
 
 li.list-group-item.active > a {
   color: white;
+}
+li.list-group-item.active{
+   background-color: #021e53c7 !important;
 }
 </style>

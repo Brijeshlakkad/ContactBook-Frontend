@@ -1,6 +1,6 @@
 <template>
-  <div class="row">
-    <div class="col-sm-offset-4 col-sm-4 col-sm-offset-4">
+  <div class="row justify-content-center" style="margin-top:10px;">
+    <div class="col-6 col-sm-4">
       <h3>Login</h3>
       <hr />
       <div class="row">
@@ -14,7 +14,7 @@
           <p v-for="error in form.errors" :key="error">{{error}}</p>
         </div>
         <div class="row">
-          <div class="col-sm-offset-1 col-xs-8 col-sm-offset-1">
+          <div class="col-12 col-xs-10">
             <label for="email">Email</label>
             <input
               type="text"
@@ -30,8 +30,8 @@
           </div>
         </div>
 
-        <div class="row justify-content-center">
-          <div class="col-sm-offset-1 col-xs-8 col-sm-offset-1">
+        <div class="row">
+          <div class="col-12 col-xs-10">
             <label for="password">Password</label>
             <input
               type="password"
@@ -46,8 +46,8 @@
           </div>
         </div>
 
-        <div class="row justify-content-center">
-          <div class="col-sm-offset-1 col-xs-8 col-sm-offset-1">
+        <div class="row">
+          <div class="col-12 col-xs-10">
             <button
               class="btn btn-primary"
               :disabled="$v.form.$error || $v.form.$invalid"
