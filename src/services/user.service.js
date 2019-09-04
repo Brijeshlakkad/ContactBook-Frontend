@@ -1,5 +1,5 @@
 import axios from "axios";
-import { dbData } from '../config';
+import { connectionUrls } from '../config';
 import { User } from "../models/User";
 import queryString from 'query-string';
 // import { http } from "../services";
@@ -16,7 +16,7 @@ export default class UserService {
     async login(email, password) {
         // http.baseUrl = dbData.loginUrl;
         let user;
-        await axios.post(dbData.loginUrl, queryString.stringify({
+        await axios.post(connectionUrls.loginUrl, queryString.stringify({
             email: email,
             password: password
         }), config).then(res => {
@@ -27,7 +27,7 @@ export default class UserService {
     async register(form) {
         const { name, email, password } = form;
         let user;
-        await axios.post(dbData.registerUrl, queryString.stringify({
+        await axios.post(connectionUrls.registerUrl, queryString.stringify({
             name: name,
             email: email,
             password: password

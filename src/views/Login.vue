@@ -48,7 +48,11 @@
 
         <div class="row justify-content-center">
           <div class="col-sm-offset-1 col-xs-8 col-sm-offset-1">
-            <button class="btn btn-primary" type="submit">Login</button>
+            <button
+              class="btn btn-primary"
+              :disabled="$v.form.$error || $v.form.$invalid"
+              type="submit"
+            >Login</button>
           </div>
         </div>
       </form>

@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Login from './views/Login.vue'
 import Register from './views/Register.vue'
 import Home from './views/Home.vue'
+import ContactDetail from './components/ContactDetail.vue';
 
 Vue.use(Router)
 
@@ -29,7 +30,16 @@ const router = new Router({
             path: '/home',
             name: 'home',
             component: Home,
-            props: true
+            props: true,
+            // redirect: {
+            //     name: "contact-detail"
+            // },
+            // children: [{
+            //     path: "",
+            //     name: "contact-detail",
+            //     component: ContactDetail,
+            //     props: true
+            // }, ]
         }
     ]
 });

@@ -62,7 +62,11 @@
 
         <div class="row justify-content-center">
           <div class="col-sm-offset-1 col-xs-8 col-sm-offset-1">
-            <button class="btn btn-primary" type="submit">Register</button>
+            <button
+              class="btn btn-primary"
+              type="submit"
+              :disabled="$v.form.$error || $v.form.$invalid"
+            >Register</button>
             <router-link to="/login" class="btn btn-link">Cancel</router-link>
           </div>
         </div>
