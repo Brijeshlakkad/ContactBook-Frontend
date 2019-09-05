@@ -242,12 +242,6 @@ export default {
 </script>
 
 <style scoped>
-.no-contact-selection {
-  font-size: 20px;
-  font-weight: bold;
-  text-align: center;
-  margin: 20px;
-}
 .custom-focused-element {
   color: white;
   background-color: #021e53c7;

@@ -23,16 +23,6 @@
     </div>
     <ul class="nav navbar-nav navbar-right">
       <li>
-        <form class="form-inline" action="/action_page.php">
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text">@</span>
-            </div>
-            <input type="text" class="form-control" placeholder="contact" />
-          </div>
-        </form>
-      </li>
-      <li>
         <a href="#" class="nav-link" @click="logout()">Logout</a>
       </li>
     </ul>

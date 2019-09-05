@@ -8,16 +8,35 @@ const config = {
     }
 }
 export default class ContactService {
+    async getContactList(userId, limit, skip) {
+            let contactList = [];
+            await axios.get(connectionUrls.contactUrl + "?userId=" + userId + "&limit=" + limit + "&skip=" + skip, config).then(res => {
+                res.data.map((data) => {
+                    contactList.push(new Contact(data));
+                });
 
-    async getContactList(userId) {
-        let contactList = [];
-        await axios.get(connectionUrls.contactUrl + "/" + userId, config).then(res => {
-            res.data.map((data) => {
-                contactList.push(new Contact(data));
             });
+            return contactList;
+        }
+        // async getContactList(userId) {
+        //     let contactList = [];
+        //     await axios.get(connectionUrls.contactUrl + "/" + userId, config).then(res => {
+        //         res.data.map((data) => {
+        //             contactList.push(new Contact(data));
+        //         });
 
+    //     });
+    //     return contactList;
+    // }
+    async getContactPageDetails(userId, pageSteps) {
+        let contactPageDetails;
+        await axios.post(connectionUrls.contactPageUrl, queryString.stringify({
+            userId: userId,
+            pageSteps: pageSteps
+        }), config).then(res => {
+            contactPageDetails = res.data;
         });
-        return contactList;
+        return contactPageDetails;
     }
     async addContact(userId, contactForm) {
         const { firstName, lastName, email, company, phone } = contactForm;

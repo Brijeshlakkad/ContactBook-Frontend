@@ -1,54 +1,56 @@
 <template>
   <div>
     <NavBar></NavBar>
-    <div class="container">
-      <nav class="navbar navbar-light">
-        <button class="btn btn-primary" @click="createDefaultContact()">
-          <span>Add Contact</span>
-        </button>
-      </nav>
-      <div class="row">
-        <contact-list
-          class="col-12 col-lg-4"
-          :contactList="contactList"
-          v-on:changedSelectedContact="changeSelectedContactFunc"
-        ></contact-list>
-        <contact-detail
-          :contact="contact"
-          :addContactFlag="addContact"
-          :user="user"
-          class="col-12 col-lg-8"
-        ></contact-detail>
+    <div>
+      <div class="container pb-5">
+        <ContactNavBar />
+      </div>
+      <div class="container-fluid">
+        <div class="row">
+          <contact-list
+            ref="contactListComponent"
+            class="col-12 col-lg-5"
+            :user="user"
+            v-on:changedSelectedContact="changeSelectedContactFunc"
+          ></contact-list>
+          <keep-alive>
+            <contact-detail
+              :contact="contact"
+              :addContactFlag="addContact"
+              :user="user"
+              class="col-12 col-lg-7"
+            ></contact-detail>
+          </keep-alive>
+        </div>
       </div>
     </div>
   </div>
 </template>
 <script>
-import ContactService from "../services/contact.service";
 import ContactList from "@/components/ContactList.vue";
 import ContactDetail from "@/components/ContactDetail.vue";
 import NavBar from "@/components/NavBar.vue";
+import ContactNavBar from "@/components/ContactNavBar.vue";
 
 export default {
   data() {
     return {
       user: null,
       contact: null,
-      addContact: null,
-      contactList: []
+      addContact: null
+      // contactList: []
     };
   },
   components: {
     NavBar,
+    ContactNavBar,
     "contact-list": ContactList,
+    // "contact-list": () => import("@/components/ContactList.vue"),
     "contact-detail": ContactDetail
   },
-  contactService: null,
   async created() {
     this.user = JSON.parse(localStorage.getItem("user"));
-    this.contactService = new ContactService();
     this.addContact = false;
-    this.getContactList();
   },
   methods: {
     // setContact: function(contact) {
@@ -60,9 +62,6 @@ export default {
     //     }
     //   });
     // },
-    getContactList: async function() {
-      this.contactList = await this.contactService.getContactList(this.user.id);
-    },
     changeSelectedContactFunc(contact) {
       this.addContact = false;
       this.contact = contact;
@@ -82,6 +81,13 @@ export default {
 </script>
 
 <style>
+.no-contact-selection {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  margin: 20px;
+}
+
 .contact {
   padding: 10px;
   margin: 10px;
