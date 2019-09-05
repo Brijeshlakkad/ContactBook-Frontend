@@ -18,6 +18,7 @@
               :contact="contact"
               :addContactFlag="addContact"
               :user="user"
+              v-on:refreshContactList="refreshContactList"
               class="col-12 col-lg-7"
             ></contact-detail>
           </keep-alive>
@@ -75,6 +76,10 @@ export default {
         email: null,
         phone: null
       };
+    },
+    refreshContactList() {
+      console.log("calling getContactList");
+      this.$refs.contactListComponent.changePageSteps();
     }
   }
 };

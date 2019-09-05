@@ -85,7 +85,6 @@ export default {
   contactService: null,
   created() {
     this.contactService = new ContactService();
-    this.getContactListPageDetails(this.pageSteps);
     this.getSelectedPage(1, false);
   },
   props: {
@@ -116,6 +115,7 @@ export default {
       }
     },
     getContactList: async function(pageSkip, pageLimit) {
+      await this.getContactListPageDetails(this.pageSteps);
       this.contactList = await this.contactService.getContactList(
         this.user.id,
         pageLimit,
@@ -133,7 +133,6 @@ export default {
       console.log("Changing page steps...");
       this.$v.pageSteps.$touch();
       if (this.$v.pageSteps.$error) return;
-      this.getContactListPageDetails(this.pageSteps);
       this.getSelectedPage(this.selectedPage, true);
     },
     previousContactPage() {

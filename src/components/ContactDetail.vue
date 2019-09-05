@@ -183,7 +183,7 @@ export default {
 
       if (this.addContactFlag) {
         await this.contactService.addContact(this.user.id, this.contact);
-        await this.$parent.getContactList();
+        this.$emit("refreshContactList");
 
         // this.$v.$reset();
         // setTimeout(() => { this.$v.$reset() }, 0);
@@ -234,7 +234,7 @@ export default {
       }
     },
     afterDeletedContact: async function() {
-      await this.$parent.getContactList();
+      this.$emit("refreshContactList");
       await this.resetContactForm();
     }
   }
