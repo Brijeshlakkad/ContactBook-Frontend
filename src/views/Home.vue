@@ -129,7 +129,7 @@ li.list-group-item > a {
 li.list-group-item.active > a {
   color: white;
 }
-li.list-group-item.active{
-   background-color: #021e53c7 !important;
+li.list-group-item.active {
+  background-color: #021e53c7 !important;
 }
 </style>

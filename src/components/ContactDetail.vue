@@ -102,17 +102,22 @@
             >{{actionToTake}}</button>
           </div>
           <div v-if="!addContactFlag" class="p-3">
-            <button class="btn btn-danger" @click="deleteContact()">Delete</button>
+            <button class="btn btn-danger" @click="deleteConfirmation(deleteContact)">Delete</button>
           </div>
         </div>
       </div>
     </div>
+    <ConfirmationModal ref="confirmationModal" :modalData="confirmationModal"></ConfirmationModal>
+    <ShowStatusModal ref="showStatusModal" :modalData="showStatusModal"></ShowStatusModal>
   </div>
 </template>
   
 <script>
 import ContactService from "../services/contact.service";
 import { required, email } from "vuelidate/lib/validators";
+import ConfirmationModal from "@/components/ConfirmationModal.vue";
+import ShowStatusModal from "@/components/ShowStatusModal.vue";
+import { async } from "q";
 
 function isValidPhone(val) {
   let pattern = /^[0-9]{10}$/;
@@ -123,7 +128,20 @@ function isValidPhone(val) {
 }
 export default {
   data() {
-    return {};
+    return {
+      confirmationModal: {
+        header: null,
+        body: null,
+        cancelAction: null,
+        takeAction: null,
+        callBackFunc: Function
+      },
+      showStatusModal: {
+        status: String,
+        closeButton: Boolean,
+        callBackFunc: Function
+      }
+    };
   },
   contactService: null,
   props: {
@@ -136,6 +154,10 @@ export default {
     user: {
       type: Object
     }
+  },
+  components: {
+    ConfirmationModal,
+    ShowStatusModal
   },
   validations: {
     contact: {
@@ -174,11 +196,27 @@ export default {
       this.$parent.createDefaultContact();
       await this.$v.contact.$reset();
     },
-    async deleteContact() {
-      let res = await this.contactService.deleteContact(this.contact.id);
-      if (res.status == 200) {
-        console.log("Deleted successfully..");
+    async deleteConfirmation(callBackFunc) {
+      this.confirmationModal.header = "Delete contact";
+      this.confirmationModal.body =
+        "Do you want to delete now? This cannot be undone.";
+      this.confirmationModal.cancelAction = "Cancel";
+      this.confirmationModal.takeAction = "Delete";
+      this.confirmationModal.callBackFunc = callBackFunc;
+      this.$refs.confirmationModal.deleteConfirmation();
+    },
+    deleteContact: async function(result) {
+      if (result) {
+        let res = await this.contactService.deleteContact(this.contact.id);
+        if (res.status == 200) {
+          this.showStatusModal.status = "Deleted Successfully";
+          this.showStatusModal.closeButton = true;
+          this.showStatusModal.callBackFunc = this.afterDeletedContact();
+          this.$refs.showStatusModal.showDeleteActionStatus();
+        }
       }
+    },
+    afterDeletedContact: async function() {
       await this.$parent.getContactList();
       await this.resetContactForm();
     }
