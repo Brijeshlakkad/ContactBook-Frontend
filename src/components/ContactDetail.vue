@@ -107,8 +107,8 @@
         </div>
       </div>
     </div>
-    <ConfirmationModal ref="confirmationModal" :modalData="confirmationModal"></ConfirmationModal>
-    <ShowStatusModal ref="showStatusModal" :modalData="showStatusModal"></ShowStatusModal>
+    <ConfirmationModal ref="confirmationModal"></ConfirmationModal>
+    <ShowStatusModal ref="showStatusModal"></ShowStatusModal>
   </div>
 </template>
   
@@ -117,7 +117,6 @@ import ContactService from "../services/contact.service";
 import { required, email } from "vuelidate/lib/validators";
 import ConfirmationModal from "@/components/ConfirmationModal.vue";
 import ShowStatusModal from "@/components/ShowStatusModal.vue";
-import { async } from "q";
 
 function isValidPhone(val) {
   let pattern = /^[0-9]{10}$/;
@@ -139,6 +138,8 @@ export default {
       showStatusModal: {
         status: String,
         closeButton: Boolean,
+        timeOut: Number,
+        statusCode: Number,
         callBackFunc: Function
       }
     };
@@ -184,14 +185,26 @@ export default {
         await this.contactService.addContact(this.user.id, this.contact);
         await this.$parent.getContactList();
 
-        await this.resetContactForm();
         // this.$v.$reset();
         // setTimeout(() => { this.$v.$reset() }, 0);
         // this.$nextTick(() => { this.$v.$reset() });
-        return;
+      } else {
+        await this.contactService.updateContact(this.contact);
       }
-      await this.contactService.updateContact(this.contact);
+      let status = this.addContactFlag ? "Saved" : "Updated";
+      this.showStatusModal.status = status + " Successfully";
+      this.showStatusModal.statusCode = 1;
+      this.showStatusModal.closeButton = true;
+      this.showStatusModal.callBackFunc = this.addContactFlag
+        ? this.afterSavedAction
+        : this.afterUpdatedContact;
+      this.showStatusModal.timeOut = 2000;
+      this.$refs.showStatusModal.showDeleteActionStatus(this.showStatusModal);
     },
+    async afterSavedAction() {
+      await this.resetContactForm();
+    },
+    async afterUpdatedContact() {},
     async resetContactForm() {
       this.$parent.createDefaultContact();
       await this.$v.contact.$reset();
@@ -203,16 +216,20 @@ export default {
       this.confirmationModal.cancelAction = "Cancel";
       this.confirmationModal.takeAction = "Delete";
       this.confirmationModal.callBackFunc = callBackFunc;
-      this.$refs.confirmationModal.deleteConfirmation();
+      this.$refs.confirmationModal.deleteConfirmation(this.confirmationModal);
     },
     deleteContact: async function(result) {
       if (result) {
         let res = await this.contactService.deleteContact(this.contact.id);
         if (res.status == 200) {
+          this.showStatusModal.statusCode = 1;
           this.showStatusModal.status = "Deleted Successfully";
           this.showStatusModal.closeButton = true;
-          this.showStatusModal.callBackFunc = this.afterDeletedContact();
-          this.$refs.showStatusModal.showDeleteActionStatus();
+          this.showStatusModal.callBackFunc = this.afterDeletedContact;
+          this.showStatusModal.timeOut = 2000;
+          this.$refs.showStatusModal.showDeleteActionStatus(
+            this.showStatusModal
+          );
         }
       }
     },

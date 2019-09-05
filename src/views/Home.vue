@@ -9,7 +9,7 @@
       </nav>
       <div class="row">
         <contact-list
-          class="col-md-4"
+          class="col-12 col-lg-4"
           :contactList="contactList"
           v-on:changedSelectedContact="changeSelectedContactFunc"
         ></contact-list>
@@ -17,7 +17,7 @@
           :contact="contact"
           :addContactFlag="addContact"
           :user="user"
-          class="col-md-8"
+          class="col-12 col-lg-8"
         ></contact-detail>
       </div>
     </div>
@@ -116,6 +116,10 @@ a:focus {
   overflow-y: auto;
   border: 1px solid #ddd;
   padding: 10px;
+}
+
+.fill-padding {
+  border: 1px solid #ddd;
 }
 
 li.list-group-item {

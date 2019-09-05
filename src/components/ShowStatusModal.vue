@@ -5,25 +5,38 @@
 import bootbox from "bootbox";
 import { setTimeout } from "timers";
 export default {
-  props: {
-    modalData: {
-      type: Object
-    }
+  // props: {
+  //   modalData: {
+  //     type: Object
+  //   }
+  // },
+  data() {
+    return {
+      modalData: null
+    };
   },
   methods: {
-    showDeleteActionStatus(callBackFun) {
+    showDeleteActionStatus(modalData) {
+      this.modalData = modalData;
+      let classToAdd =
+        this.modalData.statusCode == 1
+          ? "alert alert-success"
+          : "alert alert-danger";
+      let message =
+        '<p class="text-center mb-0' +
+        classToAdd +
+        '"><i class="fa fa-spin fa-cog"></i>' +
+        this.modalData.status +
+        "</p>";
       if (this.modalData != null) {
         let dialog = bootbox.dialog({
-          message:
-            '<p class="text-center mb-0"><i class="fa fa-spin fa-cog"></i>' +
-            this.modalData.status +
-            "</p>",
+          message: message,
           closeButton: this.modalData.closeButton
         });
-        setTimeout(() => {
+        setTimeout(async () => {
+          await this.modalData.callBackFunc();
           dialog.modal("hide");
-          callBackFun();
-        }, 2000);
+        }, this.modalData.timeOut);
       }
     }
   }

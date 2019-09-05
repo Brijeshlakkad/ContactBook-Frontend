@@ -1,6 +1,7 @@
 <template>
   <div class="contact-list">
-    <ul class="list-group">
+    <div class="fill-padding">
+      <ul class="list-group">
       <li
         v-for="contact in contactList"
         v-bind:key="contact.id"
@@ -9,10 +10,11 @@
       >
         <a @click="select(contact)">
           <h4>{{contact.firstName}} {{contact.lastName}}</h4>
-          <p>{{contact.email}}</p>
+          <p class="text-justify">{{contact.email}}</p>
         </a>
       </li>
     </ul>
+    </div>
   </div>
 </template>
 
