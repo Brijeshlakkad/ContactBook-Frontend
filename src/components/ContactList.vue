@@ -110,7 +110,7 @@ export default {
       if (pageNumber != this.selectedPage || changedPageSteps) {
         this.selectedPage = pageNumber;
         this.pageSkip = (pageNumber - 1) * this.pageSteps;
-        this.pageLimit = pageNumber * this.pageSteps;
+        this.pageLimit = this.pageSteps;
         this.getContactList(this.pageSkip, this.pageLimit);
       }
     },
