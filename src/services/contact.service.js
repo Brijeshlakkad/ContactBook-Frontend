@@ -74,4 +74,11 @@ export default class ContactService {
         });
         return response;
     }
+    async searchContact(userId, contactName) {
+        let response;
+        await axios.get(connectionUrls.contactListUrl + "/" + userId + "?contactName=" + contactName, config).then(res => {
+            response = res.data;
+        });
+        return response;
+    }
 }

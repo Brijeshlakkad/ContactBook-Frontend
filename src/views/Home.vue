@@ -3,7 +3,14 @@
     <NavBar></NavBar>
     <div>
       <div class="container pb-5">
-        <ContactNavBar />
+        <ContactNavBar v-on:getSuggestedContactList="showSuggestedContactList" />
+      </div>
+      <div class="container px-5 py-5">
+        <ShowSearchedContact
+          v-if="suggestedContactList!=null"
+          :suggestedContactList="suggestedContactList"
+          v-on:changedSelectedContact="changeSelectedContactFunc"
+        ></ShowSearchedContact>
       </div>
       <div class="container-fluid">
         <div class="row">
@@ -32,13 +39,15 @@ import ContactList from "@/components/ContactList.vue";
 import ContactDetail from "@/components/ContactDetail.vue";
 import NavBar from "@/components/NavBar.vue";
 import ContactNavBar from "@/components/ContactNavBar.vue";
+import ShowSearchedContact from "@/components/ShowSearchedContact.vue";
 
 export default {
   data() {
     return {
       user: null,
       contact: null,
-      addContact: null
+      addContact: null,
+      suggestedContactList: null
       // contactList: []
     };
   },
@@ -47,7 +56,8 @@ export default {
     ContactNavBar,
     "contact-list": ContactList,
     // "contact-list": () => import("@/components/ContactList.vue"),
-    "contact-detail": ContactDetail
+    "contact-detail": ContactDetail,
+    ShowSearchedContact
   },
   async created() {
     this.user = JSON.parse(localStorage.getItem("user"));
@@ -80,6 +90,9 @@ export default {
     refreshContactList() {
       console.log("calling getContactList");
       this.$refs.contactListComponent.changePageSteps();
+    },
+    showSuggestedContactList(suggestedContactList) {
+      this.suggestedContactList = suggestedContactList;
     }
   }
 };
