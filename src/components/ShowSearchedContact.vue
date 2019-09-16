@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="container px-5 py-5">
   <h3>Matched results:</h3>
   <div class="contact-list">
     <div v-if="suggestedContactList.length==0">Not Found :(</div>

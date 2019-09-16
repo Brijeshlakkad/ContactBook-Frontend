@@ -5,7 +5,7 @@
       <div class="container pb-5">
         <ContactNavBar v-on:getSuggestedContactList="showSuggestedContactList" />
       </div>
-      <div class="container px-5 py-5">
+      <div>
         <ShowSearchedContact
           v-if="suggestedContactList!=null"
           :suggestedContactList="suggestedContactList"
