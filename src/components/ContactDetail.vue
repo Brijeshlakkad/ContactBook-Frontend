@@ -111,7 +111,7 @@
     <ShowStatusModal ref="showStatusModal"></ShowStatusModal>
   </div>
 </template>
-  
+
 <script>
 import ContactService from "../services/contact.service";
 import { required, email } from "vuelidate/lib/validators";

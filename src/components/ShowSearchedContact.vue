@@ -1,9 +1,10 @@
 <template>
-  <div >
-    <h3>Matched results:</h3>
-    <div class="contact-list">
-      <div v-if="suggestedContactList.length==0">Not Found :(</div>
-      <ul class="list-group" v-if="suggestedContactList.length>0">
+<div>
+  <h3>Matched results:</h3>
+  <div class="contact-list">
+    <div v-if="suggestedContactList.length==0">Not Found :(</div>
+    <div v-if="suggestedContactList.length>0">
+      <ul class="list-group">
         <li class="list-group-item" v-for="contact in suggestedContactList" :key="contact.id">
           <a @click="select(contact)" href="#" class="btn btn-link">
             <h4>{{contact.firstName}} {{contact.lastName}}</h4>
@@ -13,6 +14,7 @@
       </ul>
     </div>
   </div>
+</div>
 </template>
 <script>
 export default {
